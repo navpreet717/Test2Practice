@@ -1,6 +1,8 @@
 package reg;
 
 import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -12,51 +14,73 @@ public class Reg extends Application
     {
         launch(args);
     }
-    TextField txtCharacter;
-    TextField txtActor;
+  
     @Override public void start(Stage primaryStage)
     {
         // Create the Character label
-        Label lblCharacter = new Label("Character's Name:");
-        lblCharacter.setMinWidth(100);
-        lblCharacter.setAlignment(Pos.BOTTOM_RIGHT);
+        Label quantity = new Label("enter number of T-Shirts");
+        quantity.setMinWidth(100);
+        
         // Create the Character text field
-        txtCharacter = new TextField();
-        txtCharacter.setMinWidth(200);
-        txtCharacter.setMaxWidth(200);
-        txtCharacter.setPromptText("Enter the name of the character here.");
-        // Create the Actor label
-        Label lblActor = new Label("Actor's Name:");
-        lblActor.setMinWidth(100);
-        lblActor.setAlignment(Pos.BOTTOM_RIGHT);
-        // Create the Actor text field
-        txtActor = new TextField();
-        txtActor.setMinWidth(200);
-        txtActor.setMaxWidth(200);
-        txtActor.setPromptText("Enter the name of the actor here.");
-        // Create the Role labels
-        Label lblRole1 = new Label("The role of ");
-        Label lblRole2 = new Label();
-        Label lblRole3 = new Label(" will be played by ");
-        Label lblRole4 = new Label();
-        // Create the Character pane
-        HBox paneCharacter = new HBox(20, lblCharacter, txtCharacter);
-        paneCharacter.setPadding(new Insets(10));
-        // Create the Actor pane
-        HBox paneActor = new HBox(20, lblActor, txtActor);
-        paneActor.setPadding(new Insets(10));
-        // Create the Role pane
-        HBox paneRole = new HBox(lblRole1, lblRole2, lblRole3, lblRole4);
-        paneRole.setPadding(new Insets(10));
-        // Add the Character and Actor panes to a VBox
-        VBox pane = new VBox(10, paneCharacter, paneActor, paneRole);
-        // Create the bindings
-        lblRole2.textProperty().bind(txtCharacter.textProperty());
-        lblRole4.textProperty().bind(txtActor.textProperty());
-        // Set the stage
-        Scene scene = new Scene(pane);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Role Player");
-        primaryStage.show();    }
-}
+        TextField input = new TextField();
+        Button calculate =new Button();
+		calculate.setText("Calculate");
+        Label number = new Label();
+        Label subtotal = new Label();
+        Label tax = new Label();
+        Label total = new Label();
+        //button
+        calculate.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent e) {
+		    	int numberr= Integer.parseInt(input.getText());
+		    	double price =0.0;
+		    	if(numberr>0 && numberr <6)
+		    	{
+		    		price=5*numberr;
+		    	}
+		    	else if(numberr>=6 && numberr <=100)
+		    	{
+		    		price=2*numberr;
+		    	}
+		    	else if(numberr>100)
+		    	{
+		    		price=0.50*numberr;
+		    	}
+		    	number.setText("the number of tshirts needed::"+numberr);
+		    	subtotal.setText("the subtotal is"+price);
+		    	double taxresult=price*0.13;
+		    	tax.setText("the tax amount is"+taxresult );
+		    	double totalresult=price+taxresult;
+		    	total.setText("the total amount is"+totalresult );
+		    	
+		    } });
+
+      //2  Make a layout manager--->root is layout manager
+		//StackPane root=new StackPane();
+	VBox root=new VBox();
+	root.setSpacing(10);
+	//HBox root =new HBox();
+		//3Add controls to layout manager
+	root.getChildren().add(quantity);
+	root.getChildren().add(input);
+	root.getChildren().add(calculate);
+	root.getChildren().add(number);
+	root.getChildren().add(subtotal);
+	root.getChildren().add(tax);
+	root.getChildren().add(total);
+
+	//add layout manager to scene
+			//4 add scene to a stage
+			primaryStage.setScene(new Scene(root,1200,1920));//setting wIDTH & height
+			//5set title
+			primaryStage.setTitle("shirt price Calculator");
+			//show the app	
+			primaryStage.show();
+			
+			
+		}
+		}
+
+
 
